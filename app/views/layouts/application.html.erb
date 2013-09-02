@@ -2,6 +2,7 @@
 <html>
 <head>
   <title><%= full_title(yield(:title)) %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -11,16 +12,18 @@
   <%= favicon_link_tag %>
 </head>
 <body>
-    <header class="navbar">
-      <nav>
-        <ul class="nav">
-          <li><%=  link_to "Sign in", "#" %></li>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><%=  link_to "Sign in", "#" %></li>
           <li><%=  link_to "Sign up", "#" %></li>
         </ul>
-      </nav>
-    </header>
-    <div class="container">
+        <h3 class="text-muted">Orange Walrus</h3>
+      </div>
       <%= yield %>
+      <div class="footer">
+        <p>&copy; Orange Walrus</p>
+      </div>
     </div>
 </body>
 </html>
