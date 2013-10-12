@@ -16,9 +16,13 @@
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <li class="active"><%=  link_to "Sign in", "#" %></li>
-          <li><%=  link_to "Sign up", "#" %></li>
+          <li><%=  link_to "Sign up", signup_path %></li>
         </ul>
-        <h3 class="text-muted">Orange Walrus</h3>
+        <h2 class="text-muted">
+            <%= link_to(root_path) do %>
+                <span>orange</span>walrus
+            <% end %>
+        </h2>
       </div>
       <%= yield %>
       <div class="footer">
