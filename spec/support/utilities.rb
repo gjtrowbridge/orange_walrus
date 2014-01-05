@@ -14,6 +14,16 @@ def valid_signin(user, options={})
   end
 end
 
+def sign_out(options={})
+  if options[:no_capybara]
+    current_user.update_attribute(:remember_token, User.encrypt(User.new_remember_token))
+    cookies.delete(:remember_token)
+    self.current_user = nil
+  else
+    click_link "Sign out"
+  end
+end
+
 RSpec::Matchers.define :have_error_message do |message|
   match do |page|
     expect(page).to have_selector('div.alert.alert-error', text: message)

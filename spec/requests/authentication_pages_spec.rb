@@ -3,6 +3,14 @@ require 'spec_helper'
 describe "Authentication" do
   subject { page }
 
+  describe "index page" do
+    describe "for un-signed in users" do
+      it { should_not have_link('Settings') }
+      it { should_not have_link('Profile') }
+      it { should_not have_link('Sign out') }
+    end
+  end
+
   describe "signin page" do
     before { visit signin_path }
 
@@ -37,6 +45,23 @@ describe "Authentication" do
       it { should have_link("Sign out", href:signout_path) }
       it { should have_link("Settings", href: edit_user_path(user)) }
       it { should_not have_link("Sign in", href: signin_path) }
+
+      describe "submitting a get request to the signin page" do
+        before do
+          visit signin_path
+        end
+        it { should have_content("Already signed in") }
+      end
+
+      describe "submitting a get request to the signup page" do
+        before do
+          #get signup_path
+          visit signup_path
+        end
+        #specify { expect(response.body).not_to match(full_title('Sign up')) }
+        #specify { expect(response).to redirect_to(root_url) }
+        it { should have_content("Already signed in") }
+      end
 
       describe "followed by signout" do
         before { click_link "Sign out"}

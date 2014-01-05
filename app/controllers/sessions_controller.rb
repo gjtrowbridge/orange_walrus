@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :not_already_signed_in, only: [:new, :create]
   def new
   end
   def create
