@@ -18,5 +18,11 @@ describe "Static pages" do
 
     it { should have_link('Find Activities') }
     it { should have_link('Add Activities') }
+
+    describe "click 'Find Activities' link" do
+      before { click_link 'Find Activities' }
+      it { should have_title('Activity Index') }
+    end
+
   end
 end

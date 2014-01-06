@@ -10,11 +10,17 @@ class ActivitiesController < ApplicationController
   end
 
   def new
-
+    @activity = current_user.activities.build if signed_in?
   end
 
   def create
-
+    @activity = current_user.activities.build(activity_params)
+    if @activity.save
+      flash[:success] = "Activity created!"
+      redirect_to @activity
+    else
+      render 'new'
+    end
   end
 
   def edit
