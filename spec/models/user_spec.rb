@@ -15,6 +15,8 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:admin) }
+  it { should respond_to(:activities) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -121,5 +123,17 @@ describe User do
     its(:remember_token) { should_not be_blank }
   end
 
+  describe "activity associations" do
+    before { @user.save }
+    let!(:older_activity) do
+      FactoryGirl.create(:activity, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_activity) do
+      FactoryGirl.create(:activity, user: @user, created_at: 1.hour.ago)
+    end
 
+    it "should have the right activities in the right order" do
+      expect(@user.activities.to_a).to eq [newer_activity, older_activity]
+    end
+  end
 end

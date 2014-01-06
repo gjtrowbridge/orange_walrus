@@ -4,7 +4,7 @@ describe "Authentication" do
   subject { page }
 
   describe "index page" do
-    describe "for un-signed in users" do
+    describe "for non-signed-in users" do
       it { should_not have_link('Settings') }
       it { should_not have_link('Profile') }
       it { should_not have_link('Sign out') }
@@ -97,12 +97,44 @@ describe "Authentication" do
             end
           end
         end
-
         describe "visiting the user index" do
           before { visit users_path }
           it { should have_title('Sign in') }
         end
       end
+
+      describe "in the Activities controller" do
+        let(:activity) { FactoryGirl.create(:activity) }
+        describe "submitting to the create action" do
+          before { post activities_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete activity_path(activity) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the update action" do
+          before { patch activity_path(activity) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "visiting the edit activity page" do
+          before { visit edit_activity_path(activity) }
+          it { should have_title('Sign in') }
+        end
+        describe "visiting the activity index page" do
+          before { visit activities_path }
+          it { should have_title('Activity Index') }
+        end
+        describe "visiting the activity profile page" do
+          before { visit activity_path(activity) }
+          it { should have_title(activity.name) }
+        end
+
+      end
+
     end
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }

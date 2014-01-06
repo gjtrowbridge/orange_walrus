@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :activities
   before_save { email.downcase! }
   before_create :create_remember_token
   validates :display_name, presence: true, length: { maximum: 50, minimum: 3 }, uniqueness: { case_sensitive: false }

@@ -9,4 +9,10 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :activity do
+    name "Activity Name"
+    description "Activity description here."
+    user
+  end
 end
