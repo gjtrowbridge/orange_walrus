@@ -11,8 +11,8 @@ FactoryGirl.define do
   end
 
   factory :activity do
-    name "Activity Name"
-    description "Activity description here."
+    sequence(:name) { |n| "Activity #{n}" }
+    sequence(:description) { |n| "Description #{n}" }
     user
   end
 end

@@ -124,6 +124,7 @@ describe "Authentication" do
           before { visit edit_activity_path(activity) }
           it { should have_title('Sign in') }
         end
+
         describe "visiting the activity index page" do
           before { visit activities_path }
           it { should have_title('Activity Index') }
@@ -132,9 +133,7 @@ describe "Authentication" do
           before { visit activity_path(activity) }
           it { should have_title(activity.name) }
         end
-
       end
-
     end
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
@@ -151,7 +150,22 @@ describe "Authentication" do
         before { patch user_path(wrong_user) }
         specify { expect(response).to redirect_to(root_url) }
       end
+
+      describe "in the Activities controller" do
+        let(:activity) { FactoryGirl.create(:activity, user_id: wrong_user.id) }
+
+        describe "submitting a GET request to the Activities#edit action" do
+          before { get edit_activity_path(activity) }
+          specify { expect(response.body).not_to match(full_title('Edit Activity')) }
+        end
+
+        describe "submitting a PATCH request to the Activities#update action" do
+          before { patch activity_path(activity) }
+          specify { expect(response).to redirect_to(activity_path(activity)) }
+        end
+      end
     end
+
     describe "as non-admin user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:non_admin) { FactoryGirl.create(:user) }

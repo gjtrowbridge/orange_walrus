@@ -1,1 +1,8 @@
 <% provide(:title, "Activity Index") %>
+<h1>Activities</h1>
+
+<%= will_paginate %>
+
+<ul class="activities">
+  <%= render @activities %>
+</ul>

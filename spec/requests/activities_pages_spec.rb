@@ -4,6 +4,7 @@ describe "Activities Pages" do
   subject { page }
 
   let(:user) { FactoryGirl.create(:user) }
+
   before { valid_signin user }
 
   describe "activity creation" do
@@ -26,6 +27,83 @@ describe "Activities Pages" do
         expect { click_button "Create" }.to change(Activity, :count).by(1)
       end
     end
+  end
+
+  describe "index" do
+    before do
+      visit activities_path
+    end
+    describe "pagination" do
+      before(:all) { 10.times { FactoryGirl.create(:activity) } }
+      after(:all) do
+        Activity.delete_all
+        User.delete_all
+      end
+
+      #it { should have_selector('div.pagination') }
+
+      it "should list each activity" do
+        Activity.paginate(page: 1, per_page: 10).each do |activity|
+          expect(page).to have_selector('li', text: activity.name)
+        end
+      end
+      it "should have links to each activity" do
+        Activity.paginate(page: 1).each do |activity|
+          page { should have_link activity.name, href: activity_path(activity) }
+        end
+      end
+    end
+  end
+
+  describe "show" do
+    let(:activity) { FactoryGirl.create(:activity) }
+    before do
+      visit activity_path(activity)
+    end
+
+    it { should have_link "Edit", href: edit_activity_path(activity) }
+  end
+
+  describe "new" do
+    before do
+      visit add_activity_path
+    end
+    describe "page" do
+      it { should have_title("Add Activity") }
+      it { should have_content("New Activity") }
+
+      describe "with invalid information" do
+        it "should not create an activity" do
+          expect { click_button "Create Activity" }.not_to change(Activity, :count)
+        end
+      end
+
+      describe "with valid information" do
+        before do
+          fill_in "Name", with: "Sample Activity1"
+          fill_in "Description", with: "This is a sample activity"
+        end
+        it "should create an activity" do
+          expect { click_button "Create Activity" }.to change(Activity, :count)
+        end
+
+        describe "after saving an activity" do
+          before { click_button "Create Activity" }
+          it { should have_content "Sample Activity1" }
+          it { should have_content "This is a sample activity" }
+
+        end
+
+      end
+    end
+  end
+
+  describe "edit" do
+    let(:activity) { FactoryGirl.create(:activity) }
+    before do
+
+    end
 
   end
+
 end

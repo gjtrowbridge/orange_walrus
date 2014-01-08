@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page], per_page: 20)
   end
 
   def edit
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @activities = @user.activities.paginate(page: params[:page])
+    @activities = @user.activities.paginate(page: params[:page], per_page: 5)
   end
 
   private
@@ -52,7 +52,6 @@ class UsersController < ApplicationController
     end
 
     #Before filters
-
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)

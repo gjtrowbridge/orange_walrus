@@ -1,5 +1,5 @@
 <li>
-  <span class="content"><%= activity.name %></span>
+  <%= link_to(activity.name, activity_path(activity)) %>
   <span class="timestamp">
     Posted <%= time_ago_in_words(activity.created_at) %> ago.
   </span>
