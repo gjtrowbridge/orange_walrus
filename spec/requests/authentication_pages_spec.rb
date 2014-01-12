@@ -154,6 +154,11 @@ describe "Authentication" do
       describe "in the Activities controller" do
         let(:activity) { FactoryGirl.create(:activity, user_id: wrong_user.id) }
 
+        describe "visiting another user's activity profile page" do
+          before { visit activity_path(activity)}
+          it { should_not have_link("Edit") }
+        end
+
         describe "submitting a GET request to the Activities#edit action" do
           before { get edit_activity_path(activity) }
           specify { expect(response.body).not_to match(full_title('Edit Activity')) }

@@ -4,6 +4,17 @@ class ActivitiesController < ApplicationController
 
   def show
     @activity = Activity.find(params[:id])
+    if @activity.user == current_user
+      @can_edit= true
+    elsif !current_user.nil?
+      if current_user.admin?
+        @can_edit = true
+      else
+        @can_edit = false
+      end
+    else
+      @can_edit = false
+    end
   end
 
   def index
@@ -41,6 +52,8 @@ class ActivitiesController < ApplicationController
     end
     def correct_user_for_activity
       @activity = Activity.find(params[:id])
-      redirect_to(activity_path(@activity), notice: "You do not have permission to modify this activity.") unless current_user?(@activity.user)
+      unless current_user?(@activity_user) || current_user.admin?
+        redirect_to(activity_path(@activity), notice: "You do not have permission to modify this activity.")
+      end
     end
 end

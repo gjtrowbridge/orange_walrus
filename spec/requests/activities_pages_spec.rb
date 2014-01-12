@@ -61,7 +61,8 @@ describe "Activities Pages" do
       visit activity_path(activity)
     end
 
-    it { should have_link "Edit", href: edit_activity_path(activity) }
+    it { should have_content activity.name }
+    it { should have_content activity.description }
   end
 
   describe "new" do
@@ -101,9 +102,24 @@ describe "Activities Pages" do
   describe "edit" do
     let(:activity) { FactoryGirl.create(:activity) }
     before do
-
+      visit edit_activity_path(activity)
     end
-
+    describe "page" do
+      it { should have_content "Edit Activity" }
+    end
+    describe "with valid information" do
+      let(:new_name) { "Edited Activity Name" }
+      let(:new_description) { "Edited Activity Description" }
+      before do
+        fill_in "Name",         with:new_name
+        fill_in "Description",  with:new_description
+        click_button "Update Activity"
+      end
+      it { should have_title(new_name) }
+      it { should have_content(new_description) }
+      specify { expect(activity.reload.name).to eq new_name }
+      specify { expect(activity.reload.description).to eq new_description }
+    end
   end
 
 end

@@ -1,4 +1,6 @@
 <% provide(:title, @activity.name) %>
 <p>Name: <%= @activity.name %></p>
 <p>Description: <%= @activity.description %></p>
-<%= link_to("Edit", edit_activity_path(@activity)) %>
+<% if @can_edit %>
+    <%= link_to("Edit", edit_activity_path(@activity)) %>
+<% end %>
