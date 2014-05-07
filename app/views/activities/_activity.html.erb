@@ -1,6 +1,4 @@
-<li>
-  <%= link_to(activity.name, activity_path(activity)) %>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(activity.created_at) %> ago.
-  </span>
-</li>
+<%= link_to(activity_path(activity), class:"list-group-item ow-border-blue", style:"border-width:0.2em; margin-bottom: 0.5em" ) do %>
+    <%= activity.name %>
+<% end %>
+
