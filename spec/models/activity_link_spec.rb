@@ -18,4 +18,14 @@ describe ActivityLink do
     it { should_not be_valid }
   end
 
+  describe "when url format is invalid" do
+    it "should be invalid" do
+      addresses = %w[foo,com user_dot_com example.com.]
+      addresses.each do |invalid_url|
+        @activity_link.url = invalid_url
+        expect(@activity_link).not_to be_valid
+      end
+    end
+  end
+
 end

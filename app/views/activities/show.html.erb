@@ -3,6 +3,15 @@
 <p>Description: <%= @activity.description %></p>
 <p>Cost: <%= @activity.cost %></p>
 <p>Location: <%= @activity.location %></p>
+<% if @activity.activity_links.any? %>
+    <p>Links to Additional Information: </p>
+    <ul class="activity-links">
+      <% @activity.activity_links.each do |al| %>
+        <li><%= "#{al.url} (#{al.description})"%></li>
+      <% end %>
+    </ul>
+<% end %>
+
 <% if @can_edit %>
     <%= link_to("Edit", edit_activity_path(@activity)) %>
 <% end %>
