@@ -52,7 +52,7 @@ class ActivitiesController < ApplicationController
 
   private
     def activity_params
-      params.require(:activity).permit(:name, :description)
+      params.require(:activity).permit(:name, :description, :cost, :location)
     end
     def correct_user_for_activity
       @activity = Activity.find(params[:id])

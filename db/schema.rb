@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140105063028) do
+ActiveRecord::Schema.define(version: 20140512210659) do
 
   create_table "activities", force: true do |t|
     t.string   "name"
@@ -19,9 +19,21 @@ ActiveRecord::Schema.define(version: 20140105063028) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "location"
+    t.text     "cost"
   end
 
   add_index "activities", ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at"
+
+  create_table "activity_links", force: true do |t|
+    t.string   "url"
+    t.string   "description"
+    t.integer  "activity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activity_links", ["activity_id"], name: "index_activity_links_on_activity_id"
 
   create_table "users", force: true do |t|
     t.string   "display_name"

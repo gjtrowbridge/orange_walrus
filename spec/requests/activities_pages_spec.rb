@@ -122,15 +122,25 @@ describe "Activities Pages" do
     describe "with valid information" do
       let(:new_name) { "Edited Activity Name" }
       let(:new_description) { "Edited Activity Description" }
+      let(:new_cost) { "Edited Activity Cost" }
+      let(:new_location) { "Edited Activity Location" }
       before do
         fill_in "Name",         with:new_name
         fill_in "Description",  with:new_description
+        fill_in "Cost",         with:new_cost
+        fill_in "Location",     with:new_location
         click_button "Update Activity"
       end
       it { should have_title(new_name) }
       it { should have_content(new_description) }
+      it { should have_content(new_cost) }
+      it { should have_content(new_location) }
+
       specify { expect(activity.reload.name).to eq new_name }
       specify { expect(activity.reload.description).to eq new_description }
+      specify { expect(activity.reload.cost).to eq new_cost }
+      specify { expect(activity.reload.location).to eq new_location }
+
     end
   end
 

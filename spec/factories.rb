@@ -13,6 +13,8 @@ FactoryGirl.define do
   factory :activity do
     sequence(:name) { |n| "Activity #{n}" }
     sequence(:description) { |n| "Description #{n}" }
+    sequence(:location) { |n| "Location #{n}" }
+    sequence(:cost) { |n| "Cost #{n}" }
     user
   end
 

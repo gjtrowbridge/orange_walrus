@@ -1,8 +1,13 @@
 <%= render 'shared/error_messages', object: f.object %>
 
 <%=  f.label :name %>
-<%=  f.text_field :name, placeholder: "Name (eg. 'Co-ed baseball league')" %>
+<%=  f.text_field :name, placeholder: "Enter Activity Name (eg. 'Co-ed baseball league')..." %>
 
 <%= f.label :description %>
-<%= f.text_area :description, placeholder:
-    "Description (eg. 'Fridays from 2-3 PM at Mitchell Field, sign up at www.examplebaseballleague.com')" %>
+<%= f.text_area :description, placeholder: "Enter a short description of the activity..." %>
+
+<%= f.label :cost %>
+<%= f.text_area :cost, placeholder: "How much does the activity cost?" %>
+
+<%= f.label :location %>
+<%= f.text_area :location, placeholder: "Where is the activity located?" %>
