@@ -10,6 +10,9 @@ describe Activity do
 
   it { should respond_to(:name) }
   it { should respond_to(:description) }
+  it { should respond_to(:location) }
+  it { should respond_to(:links) }
+  it { should respond_to(:cost) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
   its(:user) { should eq user }

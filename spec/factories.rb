@@ -15,4 +15,11 @@ FactoryGirl.define do
     sequence(:description) { |n| "Description #{n}" }
     user
   end
+
+  factory :activity_link do
+    sequence(:url) { |n| "www.orangwalrus.com/activities/#{n}" }
+    sequence(:description) { |n| "Link to activity #{n}" }
+    activity
+  end
+
 end

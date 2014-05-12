@@ -57,12 +57,24 @@ describe "Activities Pages" do
 
   describe "show" do
     let(:activity) { FactoryGirl.create(:activity) }
+    let!(:link1) { FactoryGirl.create(:activity_link, activity: activity, description: "Link to google", url: "www.google.com") }
+    let!(:link2) { FactoryGirl.create(:activity_link, activity: activity, description: "Link to yahoo", url: "www.yahoo.com") }
     before do
       visit activity_path(activity)
     end
 
     it { should have_content activity.name }
     it { should have_content activity.description }
+    it { should have_content activity.location }
+    it { should have_content activity.cost }
+
+    describe "activity links" do
+      it { should have_content(link1.url) }
+      it { should have_content(link2.url) }
+      it { should have_content(link1.description) }
+      it { should have_content(link2.description) }
+    end
+
   end
 
   describe "new" do
