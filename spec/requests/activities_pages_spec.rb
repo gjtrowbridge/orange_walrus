@@ -100,12 +100,12 @@ describe "Activities Pages" do
   end
 
   describe "edit" do
-    let(:activity) { FactoryGirl.create(:activity) }
+    let(:activity) { FactoryGirl.create(:activity, user: user) }
     before do
       visit edit_activity_path(activity)
     end
     describe "page" do
-      it { should have_content "Edit Activity" }
+      it { should have_title "Edit Activity" }
     end
     describe "with valid information" do
       let(:new_name) { "Edited Activity Name" }

@@ -52,8 +52,8 @@ describe "User Pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
-    let!(:a1) { FactoryGirl.create(:activity, user: user, name: "Activity 1") }
-    let!(:a2) { FactoryGirl.create(:activity, user: user, name: "Activity 2") }
+    let!(:a1) { FactoryGirl.create(:activity, user: user, name: "Manual Activity 1") }
+    let!(:a2) { FactoryGirl.create(:activity, user: user, name: "Manual Activity 2") }
 
     before { visit user_path(user) }
     it { should have_content(user.display_name) }

@@ -39,11 +39,15 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-
+    if @activity.update_attributes(activity_params)
+      flash[:success] = "Activity updated"
+      redirect_to @activity
+    else
+      render 'edit'
+    end
   end
 
   def destroy
-
   end
 
   private
@@ -52,7 +56,7 @@ class ActivitiesController < ApplicationController
     end
     def correct_user_for_activity
       @activity = Activity.find(params[:id])
-      unless current_user?(@activity_user) || current_user.admin?
+      unless current_user?(@activity.user) || current_user.admin?
         redirect_to(activity_path(@activity), notice: "You do not have permission to modify this activity.")
       end
     end
