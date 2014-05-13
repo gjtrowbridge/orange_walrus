@@ -11,3 +11,9 @@
 
 <%= f.label :location %>
 <%= f.text_area :location, placeholder: "Where is the activity located?" %>
+
+<ul class="activity-links">
+  <%= f.fields_for :activity_links do |builder| %>
+    <%= render partial: 'activity_link_fields', locals: { :builder => builder} %>
+  <% end %>
+</ul>

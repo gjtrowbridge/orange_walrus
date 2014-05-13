@@ -23,6 +23,7 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity = current_user.activities.build if signed_in?
+    @activity.activity_links.build
   end
 
   def create
@@ -36,6 +37,7 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
+    @activity.activity_links.build
   end
 
   def update
@@ -52,7 +54,8 @@ class ActivitiesController < ApplicationController
 
   private
     def activity_params
-      params.require(:activity).permit(:name, :description, :cost, :location)
+      params.require(:activity).permit(:name, :description, :cost, :location,
+                                       :activity_links_attributes => [:id, :url, :description, :_destroy])
     end
     def correct_user_for_activity
       @activity = Activity.find(params[:id])

@@ -96,6 +96,7 @@ describe "Activities Pages" do
           fill_in "Name", with: "Sample Activity1"
           fill_in "Description", with: "This is a sample activity"
         end
+
         it "should create an activity" do
           expect { click_button "Create Activity" }.to change(Activity, :count)
         end
@@ -104,7 +105,15 @@ describe "Activities Pages" do
           before { click_button "Create Activity" }
           it { should have_content "Sample Activity1" }
           it { should have_content "This is a sample activity" }
+        end
 
+        describe "with link information listed" do
+          before do
+            fill_in "Link", with: "www.thisisaurl.com"
+            click_button "Create Activity"
+          end
+
+          it { should have_content "www.thisisaurl.com" }
         end
 
       end
@@ -124,23 +133,26 @@ describe "Activities Pages" do
       let(:new_description) { "Edited Activity Description" }
       let(:new_cost) { "Edited Activity Cost" }
       let(:new_location) { "Edited Activity Location" }
+      let(:new_link) { "www.newlink.com" }
       before do
         fill_in "Name",         with:new_name
         fill_in "Description",  with:new_description
         fill_in "Cost",         with:new_cost
         fill_in "Location",     with:new_location
+        fill_in "Link",         with:new_link
         click_button "Update Activity"
       end
       it { should have_title(new_name) }
       it { should have_content(new_description) }
       it { should have_content(new_cost) }
       it { should have_content(new_location) }
+      it { should have_content(new_link) }
 
       specify { expect(activity.reload.name).to eq new_name }
       specify { expect(activity.reload.description).to eq new_description }
       specify { expect(activity.reload.cost).to eq new_cost }
       specify { expect(activity.reload.location).to eq new_location }
-
+      specify { expect(activity.reload.activity_links.first).to eq new_link }
     end
   end
 
